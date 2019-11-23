@@ -11,8 +11,8 @@ export class TasksService {
     return this.tasks;
   }
 
-  public getTask(id: string): TaskInterface[] {
-    return this.tasks.filter(task => task.id === id);
+  public getTask(id: string): TaskInterface {
+    return this.tasks.find(task => task.id === id);
   }
 
   public createTask(body: TaskDto): TaskInterface {
@@ -27,8 +27,13 @@ export class TasksService {
     return task;
   }
 
-  public deleteTask(id: string): TaskInterface[] {
-    const test: TaskInterface[] = this.tasks.filter(task => task.id !== id);
-    return (this.tasks = test);
+  public deleteTask(id: string): void {
+    this.tasks = this.tasks.filter(task => task.id !== id);
+  }
+
+  public changeTaskStatus(id: string, status: TaskStatusEnum): TaskInterface {
+    const task: TaskInterface = this.getTask(id);
+    task.status = status;
+    return task;
   }
 }
